@@ -19,7 +19,7 @@
 
 #ifndef R_TS_H
 #define R_TS_H
-#include <Rinternals.h>
+#include <private/Rinternals.h>
 #include "stats.h"
 
 void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,

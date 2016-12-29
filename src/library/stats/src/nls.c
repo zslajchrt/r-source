@@ -29,7 +29,7 @@
 #include <math.h>
 #include <float.h>
 #include <R.h>
-#include <Rinternals.h>
+#include <private/Rinternals.h>
 #include "nls.h"
 
 #ifndef MIN
