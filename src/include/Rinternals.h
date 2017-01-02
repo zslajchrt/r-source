@@ -372,7 +372,8 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 	  SET_LONG_VEC_TRUELENGTH(sl__x__, sl__v__); \
       else SET_SHORT_VEC_TRUELENGTH(sl__x__, (R_len_t) sl__v__); \
   } while (0)
-# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && SHORT_VEC_LENGTH(x) == 1)
+//@MOVED: IS_SCALAR used 23 times in main
+//# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && SHORT_VEC_LENGTH(x) == 1)
 #else
 # define SHORT_VEC_LENGTH(x) (((VECSEXP) (x))->vecsxp.length)
 # define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
@@ -384,7 +385,8 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 # define SET_SHORT_VEC_LENGTH SETLENGTH
 # define SET_SHORT_VEC_TRUELENGTH SET_TRUELENGTH
 # define IS_LONG_VEC(x) 0
-# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && LENGTH(x) == 1)
+//@MOVED: IS_SCALAR used 23 times in main
+//# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && LENGTH(x) == 1)
 #endif
 
 /* Under the generational allocator the data for vector nodes comes
@@ -472,18 +474,21 @@ Rboolean (Rf_isEnvironment)(SEXP s);
 Rboolean (Rf_isString)(SEXP s);
 Rboolean (Rf_isObject)(SEXP s);
 
-# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && XLENGTH(x) == 1)
+//@MOVED: IS_SCALAR used 23 times in main
+//# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && XLENGTH(x) == 1)
 #endif /* USE_RINTERNALS */
 
-#define IS_SIMPLE_SCALAR(x, type) \
-    (IS_SCALAR(x, type) && ATTRIB(x) == R_NilValue)
+//@MOVED: IS_SIMPLE_SCALAR used 4 times in main
+//#define IS_SIMPLE_SCALAR(x, type) \
+//    (IS_SCALAR(x, type) && ATTRIB(x) == R_NilValue)
 
 #define NAMEDMAX 2
-#define INCREMENT_NAMED(x) do {				\
-	SEXP __x__ = (x);				\
-	if (NAMED(__x__) != NAMEDMAX)			\
-	    SET_NAMED(__x__, NAMED(__x__) + 1);		\
-    } while (0)
+//@MOVED: INCREMENT_NAMED used 12 times in main
+//#define INCREMENT_NAMED(x) do {				\
+//	SEXP __x__ = (x);				\
+//	if (NAMED(__x__) != NAMEDMAX)			\
+//	    SET_NAMED(__x__, NAMED(__x__) + 1);		\
+//    } while (0)
 
 #if defined(COMPUTE_REFCNT_VALUES)
 # define SET_REFCNT(x,v) (REFCNT(x) = (v))
@@ -492,25 +497,31 @@ Rboolean (Rf_isObject)(SEXP s);
 # else
 #  define SET_TRACKREFS(x,v) ((x)->sxpinfo.spare = ! (v))
 # endif
-# define DECREMENT_REFCNT(x) do {					\
-	SEXP drc__x__ = (x);						\
-	if (REFCNT(drc__x__) > 0 && REFCNT(drc__x__) < REFCNTMAX)	\
-	    SET_REFCNT(drc__x__, REFCNT(drc__x__) - 1);			\
-    } while (0)
-# define INCREMENT_REFCNT(x) do {			      \
-	SEXP irc__x__ = (x);				      \
-	if (REFCNT(irc__x__) < REFCNTMAX)		      \
-	    SET_REFCNT(irc__x__, REFCNT(irc__x__) + 1);	      \
-    } while (0)
+//@MOVED: DECREMENT_REFCNT used 13 times in main
+// # define DECREMENT_REFCNT(x) do {					\
+// 	SEXP drc__x__ = (x);						\
+// 	if (REFCNT(drc__x__) > 0 && REFCNT(drc__x__) < REFCNTMAX)	\
+// 	    SET_REFCNT(drc__x__, REFCNT(drc__x__) - 1);			\
+//     } while (0)
+//@MOVED: INCREMENT_REFCNT used 8 times in main
+// # define INCREMENT_REFCNT(x) do {			      \
+// 	SEXP irc__x__ = (x);				      \
+// 	if (REFCNT(irc__x__) < REFCNTMAX)		      \
+// 	    SET_REFCNT(irc__x__, REFCNT(irc__x__) + 1);	      \
+//     } while (0)
 #else
 # define SET_REFCNT(x,v) do {} while(0)
 # define SET_TRACKREFS(x,v) do {} while(0)
-# define DECREMENT_REFCNT(x) do {} while(0)
-# define INCREMENT_REFCNT(x) do {} while(0)
+//@MOVED: DECREMENT_REFCNT used 13 times in main
+//# define DECREMENT_REFCNT(x) do {} while(0)
+//@MOVED: INCREMENT_REFCNT used 8 times in main
+//# define INCREMENT_REFCNT(x) do {} while(0)
 #endif
 
-#define ENABLE_REFCNT(x) SET_TRACKREFS(x, TRUE)
-#define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
+//@MOVED: ENABLE_REFCNT used 1 times in main
+//#define ENABLE_REFCNT(x) SET_TRACKREFS(x, TRUE)
+//@MOVED: DISABLE_REFCNT used 4 times in main
+//#define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
 
 /* Macros for some common idioms. */
 #ifdef SWITCH_TO_REFCNT
@@ -526,9 +537,10 @@ Rboolean (Rf_isObject)(SEXP s);
 #define NOT_SHARED(x) (! MAYBE_SHARED(x))
 
 /* Complex assignment support */
-/* temporary definition that will need to be refined to distinguish
-   getter from setter calls */
-#define IS_GETTER_CALL(call) (CADR(call) == R_TmpvalSymbol)
+//@MOVED: IS_GETTER_CALL used 1 times in main
+///* temporary definition that will need to be refined to distinguish
+//   getter from setter calls */
+//#define IS_GETTER_CALL(call) (CADR(call) == R_TmpvalSymbol)
 
 /* Accessor functions.  Many are declared using () to avoid the macro
    definitions in the USE_RINTERNALS section.
@@ -682,9 +694,12 @@ void (SET_HASHVALUE)(SEXP x, int v);
 #define EXTPTR_TAG(x)	TAG(x)
 
 /* Bytecode access macros */
-#define BCODE_CODE(x)	CAR(x)
-#define BCODE_CONSTS(x) CDR(x)
-#define BCODE_EXPR(x)	TAG(x)
+//@MOVED: BCODE_CODE used 6 times in main
+//#define BCODE_CODE(x)	CAR(x)
+//@MOVED: BCODE_CONSTS used 6 times in main
+//#define BCODE_CONSTS(x) CDR(x)
+//@MOVED: BCODE_EXPR used 3 times in main
+//#define BCODE_EXPR(x)	TAG(x)
 #define isByteCode(x)	(TYPEOF(x)==BCODESXP)
 
 /* Pointer Protection and Unprotection */
@@ -825,6 +840,7 @@ int Rf_countContexts(int, int);
 SEXP Rf_CreateTag(SEXP);
 void Rf_defineVar(SEXP, SEXP, SEXP);
 SEXP Rf_dimgets(SEXP, SEXP);
+//@MOVED: DropDims used 5 times in main
 SEXP Rf_dimnamesgets(SEXP, SEXP);
 SEXP Rf_DropDims(SEXP);
 SEXP Rf_duplicate(SEXP);
@@ -841,14 +857,19 @@ SEXP Rf_findVar(SEXP, SEXP);
 SEXP Rf_findVarInFrame(SEXP, SEXP);
 SEXP Rf_findVarInFrame3(SEXP, SEXP, Rboolean);
 SEXP Rf_getAttrib(SEXP, SEXP);
-SEXP Rf_GetArrayDimnames(SEXP);
-SEXP Rf_GetColNames(SEXP);
+//@MOVED: GetArrayDimnames used 5 times in main
+//SEXP Rf_GetArrayDimnames(SEXP);
+//@MOVED: GetColNames used 7 times in main
+//SEXP Rf_GetColNames(SEXP);
 void Rf_GetMatrixDimnames(SEXP, SEXP*, SEXP*, const char**, const char**);
 SEXP Rf_GetOption(SEXP, SEXP); /* pre-2.13.0 compatibility */
 SEXP Rf_GetOption1(SEXP);
-int Rf_GetOptionDigits(void);
-int Rf_GetOptionWidth(void);
-SEXP Rf_GetRowNames(SEXP);
+//@MOVED: GetOptionDigits used 2 times in main
+//int Rf_GetOptionDigits(void);
+//@MOVED: GetOptionWidth used 2 times in main
+//int Rf_GetOptionWidth(void);
+//@MOVED: GetRowNames used 8 times in main
+//SEXP Rf_GetRowNames(SEXP);
 void Rf_gsetVar(SEXP, SEXP, SEXP);
 SEXP Rf_install(const char *);
 SEXP Rf_installChar(SEXP);
@@ -963,8 +984,9 @@ void R_ClearExternalPtr(SEXP s);
 void R_SetExternalPtrAddr(SEXP s, void *p);
 void R_SetExternalPtrTag(SEXP s, SEXP tag);
 void R_SetExternalPtrProtected(SEXP s, SEXP p);
+//@MOVED: R_MakeExternalPtrFn used 2 times in methods
 // Added in R 3.4.0
-SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot);
+//SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot);
 DL_FUNC R_ExternalPtrAddrFn(SEXP s);
 
 /* Finalization interface */
@@ -992,7 +1014,8 @@ void R_registerBC(SEXP, SEXP);
 Rboolean R_checkConstants(Rboolean);
 Rboolean R_BCVersionOK(SEXP);
 #define PREXPR(e) R_PromiseExpr(e)
-#define BODY_EXPR(e) R_ClosureExpr(e)
+//@MOVED: BODY_EXPR used 5 times in main
+//#define BODY_EXPR(e) R_ClosureExpr(e)
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
