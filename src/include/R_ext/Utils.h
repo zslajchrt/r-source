@@ -43,9 +43,12 @@
 #define revsort       Rf_revsort
 #define iPsort        Rf_iPsort
 #define rPsort        Rf_rPsort
-#define cPsort        Rf_cPsort
-#define IndexWidth    Rf_IndexWidth
-#define setIVector    Rf_setIVector
+//@MOVED: cPsort used 1 times in main
+//#define cPsort        Rf_cPsort
+//@MOVED: IndexWidth used 15 times in main
+//#define IndexWidth    Rf_IndexWidth
+//@MOVED: setIVector used 1 times in main
+//#define setIVector    Rf_setIVector
 #define setRVector    Rf_setRVector
 #define StringFalse   Rf_StringFalse
 #define StringTrue    Rf_StringTrue

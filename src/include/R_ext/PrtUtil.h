@@ -27,7 +27,7 @@
 #ifndef PRTUTIL_H_
 #define PRTUTIL_H_
 
-#include <Rinternals.h> // for R_xlen_t
+#include <private/Rinternals.h> // for R_xlen_t
 #include <R_ext/Complex.h>
 
 #define formatLogical      Rf_formatLogical
