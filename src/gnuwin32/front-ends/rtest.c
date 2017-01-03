@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <Rversion.h>
 #define LibExtern __declspec(dllimport) extern
-#include <Rembedded.h>
+#include <private/Rembedded.h>
 #include <R_ext/RStartup.h>
 /* for askok and askyesnocancel */
 #include <graphapp.h>

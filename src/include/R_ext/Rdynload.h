@@ -105,7 +105,8 @@ int R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
 Rboolean R_forceSymbols(DllInfo *info, Rboolean value);
 
-DllInfo *R_getDllInfo(const char *name);
+//@MOVED: R_getDllInfo used 2 times in main
+//DllInfo *R_getDllInfo(const char *name);
 
 /* to be used by applications embedding R to register their symbols
    that are not related to any dynamic module */

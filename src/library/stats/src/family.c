@@ -20,7 +20,7 @@
  *
  */
 
-#include <Rinternals.h>
+#include <private/Rinternals.h>
 #include <Rconfig.h>
 #include <R_ext/Constants.h>
 #include <float.h>

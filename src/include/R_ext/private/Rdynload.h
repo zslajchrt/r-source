@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2016  The R Core Team
+ *  Copyright (C) 2001-12  The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -19,42 +19,13 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, a copy is available at
  *  https://www.R-project.org/Licenses/
- *
- *
- * Memory Allocation (garbage collected) --- INCLUDING S compatibility ---
  */
 
-/* Included by R.h: API */
+#ifndef  R_PRIVATE_EXT_DYNLOAD_H_
+#define  R_PRIVATE_EXT_DYNLOAD_H_
 
-#ifndef R_EXT_MEMORY_H_
-#define R_EXT_MEMORY_H_
+#include "../Rdynload.h"
 
-#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-# include <cstddef>
-# define R_SIZE_T std::size_t
-#else
-# include <stddef.h> /* for size_t */
-# define R_SIZE_T size_t
-#endif
+DllInfo *R_getDllInfo(const char *name);
 
-#ifdef  __cplusplus
-extern "C" {
-#endif
-
-void*	vmaxget(void);
-void	vmaxset(const void *);
-
-void	R_gc(void);
-//@MOVED: R_gc_running used 2 times in main
-//int	R_gc_running();
-
-char*	R_alloc(R_SIZE_T, int);
-long double *R_allocLD(R_SIZE_T nelem);
-char*	S_alloc(long, int);
-char*	S_realloc(char *, long, long, int);
-
-#ifdef  __cplusplus
-}
-#endif
-
-#endif /* R_EXT_MEMORY_H_ */
+#endif /* R_PRIVATE_EXT_DYNLOAD_H_ */

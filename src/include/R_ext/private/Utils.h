@@ -31,8 +31,38 @@
 
 #include <R_ext/Utils.h>
 
+#define revsort       Rf_revsort
+#define iPsort        Rf_iPsort
 #define cPsort        Rf_cPsort
 #define IndexWidth    Rf_IndexWidth
 #define setIVector    Rf_setIVector
+
+/* ../../main/sort.c : */
+void	R_csort(Rcomplex*, int);
+void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
+void	iPsort(int*,    int, int);
+void	cPsort(Rcomplex*, int, int);
+
+#ifdef R_RS_H
+void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
+void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
+#endif
+
+/* ../../main/util.c  and others : */
+void	setIVector(int*, int, int);
+void	setRVector(double*, int, double);
+Rboolean StringFalse(const char *);
+Rboolean StringTrue(const char *);
+Rboolean isBlankString(const char *);
+
+char *R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext);
+
+/* ../../appl/interv.c: also in Applic.h */
+int findInterval2(double *xt, int n, double x,
+		  Rboolean rightmost_closed,  Rboolean all_inside, Rboolean left_open,
+		  int ilo, int *mflag);
+void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
+		     int *rightmost_closed, int *all_inside, int *indx);
+
 
 #endif /* R_PRIVATE_EXT_UTILS_H_ */

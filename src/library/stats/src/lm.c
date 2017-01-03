@@ -18,7 +18,7 @@
  */
 
 #include <R.h>
-#include <Rinternals.h>
+#include <private/Rinternals.h>
 #include <R_ext/Applic.h>
 
 #include "statsR.h"

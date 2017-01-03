@@ -26,7 +26,27 @@
 
 #include <Rinterface.h>
 
+extern void R_RestoreGlobalEnv(void);
+extern void R_RestoreGlobalEnvFromFile(const char *, Rboolean);
+extern void R_SaveGlobalEnvToFile(const char *);
+extern void R_Suicide(const char *);
 extern char *R_HomeDir(void);
 extern void R_setupHistory(void);
+
+# define mainloop		Rf_mainloop
+# define onintrNoResume		Rf_onintrNoResume
+
+void mainloop(void);
+void onintrNoResume(void);
+
+void process_site_Renviron(void);
+void process_system_Renviron(void);
+void process_user_Renviron(void);
+
+/* in ../unix/sys-unix.c */
+void R_setStartTime(void);
+
+/* in ../unix/system.c */
+extern int R_running_as_main_program;
 
 #endif /* !R_RPRIVATE_H */
