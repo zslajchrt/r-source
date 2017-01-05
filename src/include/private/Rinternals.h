@@ -225,7 +225,6 @@ SEXP Rf_allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3);
 SEXP Rf_allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4);
 SEXP Rf_allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5);
 SEXP Rf_allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6);
-SEXP Rf_allocList(int);
 SEXP Rf_allocSExp(SEXPTYPE);
 SEXP Rf_allocVector3(SEXPTYPE, R_xlen_t, R_allocator_t*);
 R_xlen_t Rf_any_duplicated(SEXP x, Rboolean from_last);

@@ -860,8 +860,7 @@ SEXP Rf_allocArray(SEXPTYPE, SEXP);
 //@MOVED: Rf_allocFormalsList6 unused
 //SEXP Rf_allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6);
 SEXP Rf_allocMatrix(SEXPTYPE, int, int);
-//@MOVED: Rf_allocList unused
-//SEXP Rf_allocList(int);
+SEXP Rf_allocList(int);
 SEXP Rf_allocS4Object(void);
 //@MOVED: Rf_allocSExp unused
 //SEXP Rf_allocSExp(SEXPTYPE);
