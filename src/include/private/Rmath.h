@@ -25,11 +25,7 @@
 
 #if !defined(MATHLIB_STANDALONE) && !defined(R_NO_REMAP_RMATH)
 
-#define log1pexp       	Rf_log1pexp
 #define logspace_sum	Rf_logspace_sum
-#define dbinom_raw		Rf_dbinom_raw
-#define rmultinom	Rf_rmultinom
-#define dpois_raw	Rf_dpois_raw
 
 #endif
 
@@ -37,20 +33,7 @@
 extern "C" {
 #endif
 
-double  log1pexp(double); // <-- ../nmath/plogis.c
 double  logspace_sum(const double *, int);
-
-	/* Binomial Distribution */
-
-double  dbinom_raw(double x, double n, double p, double q, int give_log);
-
-	/* Multnomial Distribution */
-
-void	rmultinom(int, double*, int, int*);
-
-	/* Poisson Distribution */
-
-double	dpois_raw (double, double, int);
 
 #ifdef  __cplusplus
 }

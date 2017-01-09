@@ -40,13 +40,10 @@
 # define R_SIZE_T size_t
 #endif
 
-//@MOVED: Rf_revsort unused
-//#define revsort       Rf_revsort
-//@MOVED: Rf_iPsort unused
-//#define iPsort        Rf_iPsort
+#define revsort       Rf_revsort
+#define iPsort        Rf_iPsort
 #define rPsort        Rf_rPsort
-//@MOVED: cPsort used 1 times in main
-//#define cPsort        Rf_cPsort
+#define cPsort        Rf_cPsort
 //@MOVED: IndexWidth used 15 times in main
 //#define IndexWidth    Rf_IndexWidth
 //@MOVED: setIVector used 1 times in main
@@ -66,13 +63,10 @@ void	R_rsort(double*, int);
 //@MOVED: R_csort used 1 times in main
 //void	R_csort(Rcomplex*, int);
 void    rsort_with_index(double *, int *, int);
-//@MOVED: Rf_revsort unused
-//void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
-//@MOVED:
-//void	iPsort(int*,    int, int);
+void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
+void	iPsort(int*,    int, int);
 void	rPsort(double*, int, int);
-//@MOVED: cPsort used 1 times in main
-//void	cPsort(Rcomplex*, int, int);
+void	cPsort(Rcomplex*, int, int);
 
 /* ../../main/qsort.c : */
 /* dummy renamed to II to avoid problems with g++ on Solaris */
@@ -92,14 +86,10 @@ void R_qsort_int_I(int *iv, int *II, int i, int j);
 const char *R_ExpandFileName(const char *);
 //@MOVED: setIVector used 1 times in main
 //void	setIVector(int*, int, int);
-//@MOVED: Rf_setRVector unused
-//void	setRVector(double*, int, double);
-//@MOVED: Rf_StringFalse unused
-//Rboolean StringFalse(const char *);
-//@MOVED: Rf_StringTrue unused
-//Rboolean StringTrue(const char *);
-//@MOVED: Rf_isBlankString unused
-//Rboolean isBlankString(const char *);
+void	setRVector(double*, int, double);
+Rboolean StringFalse(const char *);
+Rboolean StringTrue(const char *);
+Rboolean isBlankString(const char *);
 
 /* These two are guaranteed to use '.' as the decimal point,
    and to accept "NA".

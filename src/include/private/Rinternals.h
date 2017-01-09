@@ -41,16 +41,7 @@ extern "C" {
 #define SYMVALUE(x)	((x)->u.symsxp.value)
 #define DDVAL(x)	((x)->sxpinfo.gp & DDVAL_MASK) /* for ..1, ..2 etc */
 
-/* Vector Access Macros */
-#ifdef LONG_VECTOR_SUPPORT
-# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && SHORT_VEC_LENGTH(x) == 1)
-#else
-# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && LENGTH(x) == 1)
-#endif
-
 #else /* not USE_RINTERNALS */
-
-# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && XLENGTH(x) == 1)
 
 #endif /* USE_RINTERNALS */
 
@@ -62,25 +53,18 @@ SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
 
 #ifndef R_NO_REMAP
 # define addMissingVarsToNewEnv	Rf_addMissingVarsToNewEnv
-# define alloc3DArray		Rf_alloc3DArray
 # define allocFormalsList2	Rf_allocFormalsList2
 # define allocFormalsList3	Rf_allocFormalsList3
 # define allocFormalsList4	Rf_allocFormalsList4
 # define allocFormalsList5	Rf_allocFormalsList5
 # define allocFormalsList6	Rf_allocFormalsList6
 # define allocVector3		Rf_allocVector3
-# define any_duplicated3	Rf_any_duplicated3
 # define applyClosure		Rf_applyClosure
 # define asS4				Rf_asS4
 # define fixSubset3Args		Rf_fixSubset3Args
 # define countContexts		Rf_countContexts
 # define findFun3			Rf_findFun3
 # define findFunctionForBody	Rf_findFunctionForBody
-# define GetArrayDimnames	Rf_GetArrayDimnames
-# define GetColNames		Rf_GetColNames
-# define GetOptionDigits	Rf_GetOptionDigits
-# define GetOptionWidth		Rf_GetOptionWidth
-# define GetRowNames		Rf_GetRowNames
 # define installDDVAL		Rf_installDDVAL
 # define installS3Signature	Rf_installS3Signature
 # define isBasicClass      	Rf_isBasicClass
@@ -93,14 +77,12 @@ SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
 # define readS3VarsFromFrame	Rf_readS3VarsFromFrame
 # define rownamesgets		Rf_rownamesgets
 # define setSVector			Rf_setSVector
-# define shallow_duplicate	Rf_shallow_duplicate
 # define stringSuffix		Rf_stringSuffix
 # define stringPositionTr	Rf_stringPositionTr
 # define StringBlank		Rf_StringBlank
 # define topenv		        Rf_topenv
 # define translateChar0		Rf_translateChar0
 # define type2rstr			Rf_type2rstr
-# define unprotect_ptr		Rf_unprotect_ptr
 # define xlengthgets		Rf_xlengthgets
 #endif
 
@@ -139,8 +121,6 @@ int  (HASHASH)(SEXP x);
 int  (HASHVALUE)(SEXP x);
 void (SET_HASHASH)(SEXP x, int v);
 void (SET_HASHVALUE)(SEXP x, int v);
-
-void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from);
 
 /* JIT optimization support */
 int (NOJIT)(SEXP x);
@@ -217,84 +197,45 @@ SEXP R_GetCurrentSrcref(int);
 SEXP R_GetSrcFilename(SEXP);
 
 /* Other Internally Used Functions, excluding those which are inline-able*/
-char * Rf_acopy_string(const char *);
 void Rf_addMissingVarsToNewEnv(SEXP, SEXP);
-SEXP Rf_alloc3DArray(SEXPTYPE, int, int, int);
 SEXP Rf_allocFormalsList2(SEXP sym1, SEXP sym2);
 SEXP Rf_allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3);
 SEXP Rf_allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4);
 SEXP Rf_allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5);
 SEXP Rf_allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6);
-SEXP Rf_allocSExp(SEXPTYPE);
 SEXP Rf_allocVector3(SEXPTYPE, R_xlen_t, R_allocator_t*);
-R_xlen_t Rf_any_duplicated(SEXP x, Rboolean from_last);
 R_xlen_t Rf_any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_fixSubset3Args(SEXP, SEXP, SEXP, SEXP*);
-void Rf_copyListMatrix(SEXP, SEXP, Rboolean);
-void Rf_copyVector(SEXP, SEXP);
 int Rf_countContexts(int, int);
-SEXP Rf_CreateTag(SEXP);
-SEXP Rf_dimgets(SEXP, SEXP);
-SEXP Rf_dimnamesgets(SEXP, SEXP);
 SEXP Rf_DropDims(SEXP);
-SEXP Rf_shallow_duplicate(SEXP);
 SEXP Rf_lazy_duplicate(SEXP);
-/* the next really should not be here and is also in Defn.h */
-SEXP Rf_duplicated(SEXP, Rboolean);
 Rboolean R_envHasNoSpecialSymbols(SEXP);
 SEXP Rf_findFun3(SEXP, SEXP, SEXP);
 void Rf_findFunctionForBody(SEXP);
-SEXP Rf_GetArrayDimnames(SEXP);
-SEXP Rf_GetColNames(SEXP);
-void Rf_GetMatrixDimnames(SEXP, SEXP*, SEXP*, const char**, const char**);
-SEXP Rf_GetOption(SEXP, SEXP); /* pre-2.13.0 compatibility */
-int Rf_GetOptionDigits(void);
-int Rf_GetOptionWidth(void);
-SEXP Rf_GetRowNames(SEXP);
-void Rf_gsetVar(SEXP, SEXP, SEXP);
 SEXP Rf_installDDVAL(int i);
 SEXP Rf_installS3Signature(const char *, const char *);
 Rboolean Rf_isFree(SEXP);
-Rboolean Rf_isOrdered(SEXP);
 Rboolean Rf_isUnmodifiedSpecSym(SEXP sym, SEXP env);
 Rboolean Rf_isUnsorted(SEXP, Rboolean);
 SEXP R_lsInternal3(SEXP, Rboolean, Rboolean);
-Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
-SEXP Rf_nthcdr(SEXP, int);
 
 // ../main/character.c :
 int R_nchar(SEXP string, nchar_type type_,
 	    Rboolean allowNA, Rboolean keepNA, const char* msg_name);
 
-Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
-Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 SEXP R_ParseEvalString(const char *, SEXP);
 void Rf_readS3VarsFromFrame(SEXP, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*);
 void Rf_setSVector(SEXP*, int, SEXP);
 SEXP Rf_stringSuffix(SEXP, int);
-SEXP Rf_substitute(SEXP,SEXP);
 const char * Rf_translateChar0(SEXP);
 SEXP Rf_type2rstr(SEXPTYPE);
-#ifndef INLINE_PROTECT
-void Rf_unprotect(int);
-#endif
-void Rf_unprotect_ptr(SEXP);
 SEXP R_tryEvalSilent(SEXP, SEXP, int *);
 
-Rboolean Rf_isS4(SEXP);
-SEXP Rf_asS4(SEXP, Rboolean, int);
-SEXP Rf_S3Class(SEXP);
 int Rf_isBasicClass(const char *);
 
 /* Calling a function with arguments evaluated */
 SEXP R_forceAndCall(SEXP e, int n, SEXP rho);
-
-/* External pointer interface */
-SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot);
-// Added in R 3.4.0
-SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot);
-DL_FUNC R_ExternalPtrAddrFn(SEXP s);
 
 /* Finalization interface */
 void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit);
@@ -303,7 +244,6 @@ void R_RunPendingFinalizers(void);
 /* Weak reference interface */
 SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin, Rboolean onexit);
 
-SEXP R_PromiseExpr(SEXP);
 SEXP R_ClosureExpr(SEXP);
 SEXP R_BytecodeExpr(SEXP e);
 void R_initialize_bcode(void);
@@ -343,10 +283,7 @@ SEXP R_body_no_src(SEXP x); // body(x) without "srcref" etc, ../main/utils.c
 #if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))
 #include "../Rinlinedfuns.h"
 #else
-Rboolean Rf_conformable(SEXP, SEXP);
-SEXP	 Rf_elt(SEXP, int);
 SEXP	 Rf_lastElt(SEXP);
-int	 Rf_nlevels(SEXP);
 SEXP R_FixupRHS(SEXP x, SEXP y);
 #endif
 

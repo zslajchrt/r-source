@@ -31,17 +31,11 @@
 
 #include <R_ext/Utils.h>
 
-#define revsort       Rf_revsort
-#define iPsort        Rf_iPsort
-#define cPsort        Rf_cPsort
 #define IndexWidth    Rf_IndexWidth
 #define setIVector    Rf_setIVector
 
 /* ../../main/sort.c : */
 void	R_csort(Rcomplex*, int);
-void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
-void	iPsort(int*,    int, int);
-void	cPsort(Rcomplex*, int, int);
 
 #ifdef R_RS_H
 void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
@@ -50,10 +44,6 @@ void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 
 /* ../../main/util.c  and others : */
 void	setIVector(int*, int, int);
-void	setRVector(double*, int, double);
-Rboolean StringFalse(const char *);
-Rboolean StringTrue(const char *);
-Rboolean isBlankString(const char *);
 
 char *R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext);
 
