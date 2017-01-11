@@ -36,16 +36,6 @@
 extern "C" {
 #endif
 
-	/* Double Precision LINPACK */
-
-extern void F77_NAME(dpbfa)(double*, int*, int*, int*, int*);
-extern void F77_NAME(dpbsl)(double*, int*, int*, int*, double*);
-extern void F77_NAME(dpofa)(double*, int*, int*, int*);
-extern void F77_NAME(dqrdc)(double*, int*, int*, int*, double*, int*, double*, int*);
-extern void F77_NAME(dsvdc)(double*, int*, int*, int*, double*, double*, double*, int*, double*, int*, double*, int*, int*);
-extern void F77_NAME(dtrco)(double*, int*, int*, double*, double*, int*);
-
-
 /* The following routines are listed as they have always been declared
    here, but they are not currently included in R */
 extern void F77_NAME(dchdc)(double*, int*, int*, double*, int*, int*, int*);

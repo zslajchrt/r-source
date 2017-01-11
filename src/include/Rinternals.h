@@ -476,16 +476,11 @@ Rboolean (Rf_isObject)(SEXP s);
 #endif /* USE_RINTERNALS */
 
 //@MOVED: IS_SIMPLE_SCALAR used 4 times in main
-//#define IS_SIMPLE_SCALAR(x, type) \
-//    (IS_SCALAR(x, type) && ATTRIB(x) == R_NilValue)
+//#define IS_SIMPLE_SCALAR(x, type) ...
 
 #define NAMEDMAX 2
 //@MOVED: INCREMENT_NAMED used 12 times in main
-//#define INCREMENT_NAMED(x) do {				\
-//	SEXP __x__ = (x);				\
-//	if (NAMED(__x__) != NAMEDMAX)			\
-//	    SET_NAMED(__x__, NAMED(__x__) + 1);		\
-//    } while (0)
+//#define INCREMENT_NAMED(x) do { ...
 
 //@MOVED:
 //#if defined(COMPUTE_REFCNT_VALUES)
@@ -498,17 +493,9 @@ Rboolean (Rf_isObject)(SEXP s);
 //#  define SET_TRACKREFS(x,v) ((x)->sxpinfo.spare = ! (v))
 //# endif
 //@MOVED: DECREMENT_REFCNT used 13 times in main
-// # define DECREMENT_REFCNT(x) do {					\
-// 	SEXP drc__x__ = (x);						\
-// 	if (REFCNT(drc__x__) > 0 && REFCNT(drc__x__) < REFCNTMAX)	\
-// 	    SET_REFCNT(drc__x__, REFCNT(drc__x__) - 1);			\
-//     } while (0)
+// # define DECREMENT_REFCNT(x) do { ...
 //@MOVED: INCREMENT_REFCNT used 8 times in main
-// # define INCREMENT_REFCNT(x) do {			      \
-// 	SEXP irc__x__ = (x);				      \
-// 	if (REFCNT(irc__x__) < REFCNTMAX)		      \
-// 	    SET_REFCNT(irc__x__, REFCNT(irc__x__) + 1);	      \
-//     } while (0)
+// # define INCREMENT_REFCNT(x) do { ...
 //#else
 //@MOVED: SET_REFCNT used 3 times in main
 //# define SET_REFCNT(x,v) do {} while(0)

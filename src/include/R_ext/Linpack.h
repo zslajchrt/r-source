@@ -41,22 +41,16 @@ extern "C" {
 
 	/* Double Precision LINPACK */
 
-//@MOVED: unused
-//extern void F77_NAME(dpbfa)(double*, int*, int*, int*, int*);
-//@MOVED: unused
-//extern void F77_NAME(dpbsl)(double*, int*, int*, int*, double*);
+extern void F77_NAME(dpbfa)(double*, int*, int*, int*, int*);
+extern void F77_NAME(dpbsl)(double*, int*, int*, int*, double*);
 extern void F77_NAME(dpoco)(double*, int*, int*, double*, double*, int*);
 extern void F77_NAME(dpodi)(double*, int*, int*, double*, int*);
-//@MOVED: unused
-//extern void F77_NAME(dpofa)(double*, int*, int*, int*);
+extern void F77_NAME(dpofa)(double*, int*, int*, int*);
 extern void F77_NAME(dposl)(double*, int*, int*, double*);
-//@MOVED: unused
-//extern void F77_NAME(dqrdc)(double*, int*, int*, int*, double*, int*, double*, int*);
+extern void F77_NAME(dqrdc)(double*, int*, int*, int*, double*, int*, double*, int*);
 extern void F77_NAME(dqrsl)(double*, int*, int*, int*, double*, double*, double*, double*, double*, double*, double*, int*, int*);
-//@MOVED: unused
-//extern void F77_NAME(dsvdc)(double*, int*, int*, int*, double*, double*, double*, int*, double*, int*, double*, int*, int*);
-//@MOVED: unused
-//extern void F77_NAME(dtrco)(double*, int*, int*, double*, double*, int*);
+extern void F77_NAME(dsvdc)(double*, int*, int*, int*, double*, double*, double*, int*, double*, int*, double*, int*, int*);
+extern void F77_NAME(dtrco)(double*, int*, int*, double*, double*, int*);
 extern void F77_NAME(dtrsl)(double*, int*, int*, double*, int*, int*);
 
 
