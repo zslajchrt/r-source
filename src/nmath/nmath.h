@@ -41,7 +41,7 @@
 #include <float.h> /* DBL_MIN etc */
 
 #include <Rconfig.h>
-#include <Rmath.h>
+#include <private/Rmath.h>
 
 /* Used internally only */
 double  Rf_d1mach(int);

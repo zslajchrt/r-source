@@ -54,36 +54,37 @@ extern void F77_NAME(dtrco)(double*, int*, int*, double*, double*, int*);
 extern void F77_NAME(dtrsl)(double*, int*, int*, double*, int*, int*);
 
 
+//@MOVED: unused
 /* The following routines are listed as they have always been declared
    here, but they are not currently included in R */
-extern void F77_NAME(dchdc)(double*, int*, int*, double*, int*, int*, int*);
-extern void F77_NAME(dchdd)(double*, int*, int*, double*, double*, int*, int*, double*, double*, double*, double*, int*);
-extern void F77_NAME(dchex)(double*, int*, int*, int*, int*, double*, int*, int*, double*, double*, int*);
-extern void F77_NAME(dchud)(double*, int*, int*, double*, double*, int*, int*, double*, double*, double*, double*);
-extern void F77_NAME(dgbco)(double*, int*, int*, int*, int*, int*, double*, double*);
-extern void F77_NAME(dgbdi)(double*, int*, int*, int*, int*, int*, double*);
-extern void F77_NAME(dgbfa)(double*, int*, int*, int*, int*, int*, int*);
-extern void F77_NAME(dgbsl)(double*, int*, int*, int*, int*, int*, double*, int*);
-extern void F77_NAME(dgeco)(double*, int*, int*, int*, double*, double*);
-extern void F77_NAME(dgedi)(double*, int*, int*, int*, double*, double*, int*);
-extern void F77_NAME(dgefa)(double*, int*, int*, int*, int*);
-extern void F77_NAME(dgesl)(double*, int*, int*, int*, double*, int*);
-extern void F77_NAME(dgtsl)(int*, double*, double*, double*, double*, int*);
-extern void F77_NAME(dpbco)(double*, int*, int*, int*, double*, double*, int*);
-extern void F77_NAME(dpbdi)(double*, int*, int*, int*, double*);
-extern void F77_NAME(dppco)(double*, int*, double*, double*, int*);
-extern void F77_NAME(dppdi)(double*, int*, double*, int*);
-extern void F77_NAME(dppfa)(double*, int*, int*);
-extern void F77_NAME(dppsl)(double*, int*, double*);
-extern void F77_NAME(dptsl)(int*, double*, double*, double*);
-extern void F77_NAME(dsico)(double*, int*, int*, int*, double*, double*);
-extern void F77_NAME(dsidi)(double*, int*, int*, int*, double*, int*, double*, int*);
-extern void F77_NAME(dsifa)(double*, int*, int*, int*, int*);
-extern void F77_NAME(dsisl)(double*, int*, int*, int*, double*);
-extern void F77_NAME(dspco)(double*, int*, int*, double*, double*);
-extern void F77_NAME(dspdi)(double*, int*, int*, double*, int*, double*, int*);
-extern void F77_NAME(dspfa)(double*, int*, int*, int*);
-extern void F77_NAME(dspsl)(double*, int*, int*, double*);
+//extern void F77_NAME(dchdc)(double*, int*, int*, double*, int*, int*, int*);
+//extern void F77_NAME(dchdd)(double*, int*, int*, double*, double*, int*, int*, double*, double*, double*, double*, int*);
+//extern void F77_NAME(dchex)(double*, int*, int*, int*, int*, double*, int*, int*, double*, double*, int*);
+//extern void F77_NAME(dchud)(double*, int*, int*, double*, double*, int*, int*, double*, double*, double*, double*);
+//extern void F77_NAME(dgbco)(double*, int*, int*, int*, int*, int*, double*, double*);
+//extern void F77_NAME(dgbdi)(double*, int*, int*, int*, int*, int*, double*);
+//extern void F77_NAME(dgbfa)(double*, int*, int*, int*, int*, int*, int*);
+//extern void F77_NAME(dgbsl)(double*, int*, int*, int*, int*, int*, double*, int*);
+//extern void F77_NAME(dgeco)(double*, int*, int*, int*, double*, double*);
+//extern void F77_NAME(dgedi)(double*, int*, int*, int*, double*, double*, int*);
+//extern void F77_NAME(dgefa)(double*, int*, int*, int*, int*);
+//extern void F77_NAME(dgesl)(double*, int*, int*, int*, double*, int*);
+//extern void F77_NAME(dgtsl)(int*, double*, double*, double*, double*, int*);
+//extern void F77_NAME(dpbco)(double*, int*, int*, int*, double*, double*, int*);
+//extern void F77_NAME(dpbdi)(double*, int*, int*, int*, double*);
+//extern void F77_NAME(dppco)(double*, int*, double*, double*, int*);
+//extern void F77_NAME(dppdi)(double*, int*, double*, int*);
+//extern void F77_NAME(dppfa)(double*, int*, int*);
+//extern void F77_NAME(dppsl)(double*, int*, double*);
+//extern void F77_NAME(dptsl)(int*, double*, double*, double*);
+//extern void F77_NAME(dsico)(double*, int*, int*, int*, double*, double*);
+//extern void F77_NAME(dsidi)(double*, int*, int*, int*, double*, int*, double*, int*);
+//extern void F77_NAME(dsifa)(double*, int*, int*, int*, int*);
+//extern void F77_NAME(dsisl)(double*, int*, int*, int*, double*);
+//extern void F77_NAME(dspco)(double*, int*, int*, double*, double*);
+//extern void F77_NAME(dspdi)(double*, int*, int*, double*, int*, double*, int*);
+//extern void F77_NAME(dspfa)(double*, int*, int*, int*);
+//extern void F77_NAME(dspsl)(double*, int*, int*, double*);
 
 #ifdef  __cplusplus
 }

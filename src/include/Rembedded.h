@@ -44,7 +44,8 @@ void setup_Rmainloop(void);
 extern void R_ReplDLLinit(void);
 extern int R_ReplDLLdo1(void);
 
-void R_setStartTime(void);
+//@MOVED: R_setStartTime used 9 times in gnuwin32, unix
+//void R_setStartTime(void);
 extern void R_RunExitFinalizers(void);
 extern void CleanEd(void);
 extern void Rf_KillAllDevices(void);

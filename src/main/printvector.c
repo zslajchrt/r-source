@@ -31,7 +31,7 @@
 #include <config.h>
 #endif
 
-#include "Rinternals.h"
+#include "private/Rinternals.h"
 #include "Print.h"
 
 #define DO_first_lab			\

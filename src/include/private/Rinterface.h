@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2016  The R Core Team
+ *  Copyright (C) 2000-2016 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -10,7 +10,7 @@
  *  This file is part of R. R is distributed under the terms of the
  *  GNU General Public License, either Version 2, June 1991 or Version 3,
  *  June 2007. See doc/COPYRIGHTS for details of the copyright status of R.
- *
+ *  
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,42 +19,34 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, a copy is available at
  *  https://www.R-project.org/Licenses/
- *
- *
- * Memory Allocation (garbage collected) --- INCLUDING S compatibility ---
  */
 
-/* Included by R.h: API */
+#ifndef R_PRIVATE_INTERFACE_H_
+#define R_PRIVATE_INTERFACE_H_
 
-#ifndef R_EXT_MEMORY_H_
-#define R_EXT_MEMORY_H_
+#include <Rinterface.h>
 
-#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-# include <cstddef>
-# define R_SIZE_T std::size_t
-#else
-# include <stddef.h> /* for size_t */
-# define R_SIZE_T size_t
-#endif
+extern void R_RestoreGlobalEnv(void);
+extern void R_RestoreGlobalEnvFromFile(const char *, Rboolean);
+extern void R_SaveGlobalEnvToFile(const char *);
+extern void R_Suicide(const char *);
+extern char *R_HomeDir(void);
+extern void R_setupHistory(void);
 
-#ifdef  __cplusplus
-extern "C" {
-#endif
+# define mainloop		Rf_mainloop
+# define onintrNoResume		Rf_onintrNoResume
 
-void*	vmaxget(void);
-void	vmaxset(const void *);
+void mainloop(void);
+void onintrNoResume(void);
 
-void	R_gc(void);
-//@MOVED: R_gc_running used 2 times in main
-//int	R_gc_running();
+void process_site_Renviron(void);
+void process_system_Renviron(void);
+void process_user_Renviron(void);
 
-char*	R_alloc(R_SIZE_T, int);
-long double *R_allocLD(R_SIZE_T nelem);
-char*	S_alloc(long, int);
-char*	S_realloc(char *, long, long, int);
+/* in ../unix/sys-unix.c */
+void R_setStartTime(void);
 
-#ifdef  __cplusplus
-}
-#endif
+/* in ../unix/system.c */
+extern int R_running_as_main_program;
 
-#endif /* R_EXT_MEMORY_H_ */
+#endif /* !R_RPRIVATE_H */

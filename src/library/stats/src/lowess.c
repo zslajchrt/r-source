@@ -33,7 +33,7 @@
 #include <Rmath.h>		/* fmax2, imin2, imax2 */
 #include <R_ext/Applic.h>	/* prototypes for lowess and clowess */
 #include <R_ext/Boolean.h>
-#include <R_ext/Utils.h>	/* rPsort() */
+#include <R_ext/private/Utils.h>	/* rPsort() */
 #ifdef DEBUG_lowess
 # include <R_ext/Print.h>
 #endif

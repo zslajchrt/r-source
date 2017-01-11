@@ -303,12 +303,14 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define MARK(x)		((x)->sxpinfo.mark)
 #define TYPEOF(x)	((x)->sxpinfo.type)
 #define NAMED(x)	((x)->sxpinfo.named)
-#define RTRACE(x)	((x)->sxpinfo.trace)
+//@MOVED:
+//#define RTRACE(x)	((x)->sxpinfo.trace)
 #define LEVELS(x)	((x)->sxpinfo.gp)
 #define SET_OBJECT(x,v)	(((x)->sxpinfo.obj)=(v))
 #define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
 #define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
-#define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
+//@MOVED:
+//#define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=((unsigned short)v))
 
 #if defined(COMPUTE_REFCNT_VALUES)
@@ -434,10 +436,12 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 /* Symbol Access Macros */
 #define PRINTNAME(x)	((x)->u.symsxp.pname)
-#define SYMVALUE(x)	((x)->u.symsxp.value)
+//@MOVED:
+//#define SYMVALUE(x)	((x)->u.symsxp.value)
 #define INTERNAL(x)	((x)->u.symsxp.internal)
 #define DDVAL_MASK	1
-#define DDVAL(x)	((x)->sxpinfo.gp & DDVAL_MASK) /* for ..1, ..2 etc */
+//@MOVED:
+//#define DDVAL(x)	((x)->sxpinfo.gp & DDVAL_MASK) /* for ..1, ..2 etc */
 #define SET_DDVAL_BIT(x) (((x)->sxpinfo.gp) |= DDVAL_MASK)
 #define UNSET_DDVAL_BIT(x) (((x)->sxpinfo.gp) &= ~DDVAL_MASK)
 #define SET_DDVAL(x,v) ((v) ? SET_DDVAL_BIT(x) : UNSET_DDVAL_BIT(x)) /* for ..1, ..2 etc */
@@ -471,60 +475,70 @@ Rboolean (Rf_isObject)(SEXP s);
 # define IS_SCALAR(x, type) (TYPEOF(x) == (type) && XLENGTH(x) == 1)
 #endif /* USE_RINTERNALS */
 
-#define IS_SIMPLE_SCALAR(x, type) \
-    (IS_SCALAR(x, type) && ATTRIB(x) == R_NilValue)
+//@MOVED: IS_SIMPLE_SCALAR used 4 times in main
+//#define IS_SIMPLE_SCALAR(x, type) ...
 
 #define NAMEDMAX 2
-#define INCREMENT_NAMED(x) do {				\
-	SEXP __x__ = (x);				\
-	if (NAMED(__x__) != NAMEDMAX)			\
-	    SET_NAMED(__x__, NAMED(__x__) + 1);		\
-    } while (0)
+//@MOVED: INCREMENT_NAMED used 12 times in main
+//#define INCREMENT_NAMED(x) do { ...
 
-#if defined(COMPUTE_REFCNT_VALUES)
-# define SET_REFCNT(x,v) (REFCNT(x) = (v))
-# if defined(EXTRA_REFCNT_FIELDS)
-#  define SET_TRACKREFS(x,v) (TRACKREFS(x) = (v))
-# else
-#  define SET_TRACKREFS(x,v) ((x)->sxpinfo.spare = ! (v))
-# endif
-# define DECREMENT_REFCNT(x) do {					\
-	SEXP drc__x__ = (x);						\
-	if (REFCNT(drc__x__) > 0 && REFCNT(drc__x__) < REFCNTMAX)	\
-	    SET_REFCNT(drc__x__, REFCNT(drc__x__) - 1);			\
-    } while (0)
-# define INCREMENT_REFCNT(x) do {			      \
-	SEXP irc__x__ = (x);				      \
-	if (REFCNT(irc__x__) < REFCNTMAX)		      \
-	    SET_REFCNT(irc__x__, REFCNT(irc__x__) + 1);	      \
-    } while (0)
-#else
-# define SET_REFCNT(x,v) do {} while(0)
-# define SET_TRACKREFS(x,v) do {} while(0)
-# define DECREMENT_REFCNT(x) do {} while(0)
-# define INCREMENT_REFCNT(x) do {} while(0)
-#endif
+//@MOVED:
+//#if defined(COMPUTE_REFCNT_VALUES)
+//@MOVED: SET_REFCNT used 3 times in main
+//# define SET_REFCNT(x,v) (REFCNT(x) = (v))
+//@MOVED: SET_TRACKREFS used 1 times in main
+//# if defined(EXTRA_REFCNT_FIELDS)
+//#  define SET_TRACKREFS(x,v) (TRACKREFS(x) = (v))
+//# else
+//#  define SET_TRACKREFS(x,v) ((x)->sxpinfo.spare = ! (v))
+//# endif
+//@MOVED: DECREMENT_REFCNT used 13 times in main
+// # define DECREMENT_REFCNT(x) do { ...
+//@MOVED: INCREMENT_REFCNT used 8 times in main
+// # define INCREMENT_REFCNT(x) do { ...
+//#else
+//@MOVED: SET_REFCNT used 3 times in main
+//# define SET_REFCNT(x,v) do {} while(0)
+//@MOVED: SET_TRACKREFS used 1 times in main
+//# define SET_TRACKREFS(x,v) do {} while(0)
+//@MOVED: DECREMENT_REFCNT used 13 times in main
+//# define DECREMENT_REFCNT(x) do {} while(0)
+//@MOVED: INCREMENT_REFCNT used 8 times in main
+//# define INCREMENT_REFCNT(x) do {} while(0)
+//#endif
 
-#define ENABLE_REFCNT(x) SET_TRACKREFS(x, TRUE)
-#define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
+//@MOVED: ENABLE_REFCNT used 1 times in main
+//#define ENABLE_REFCNT(x) SET_TRACKREFS(x, TRUE)
+//@MOVED: DISABLE_REFCNT used 4 times in main
+//#define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
 
+//@MOVED:
 /* Macros for some common idioms. */
-#ifdef SWITCH_TO_REFCNT
-# define MAYBE_SHARED(x) (REFCNT(x) > 1)
-# define NO_REFERENCES(x) (REFCNT(x) == 0)
-# define MARK_NOT_MUTABLE(x) SET_REFCNT(x, REFCNTMAX)
-#else
-# define MAYBE_SHARED(x) (NAMED(x) > 1)
-# define NO_REFERENCES(x) (NAMED(x) == 0)
-# define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
-#endif
-#define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
-#define NOT_SHARED(x) (! MAYBE_SHARED(x))
+//#ifdef SWITCH_TO_REFCNT
+//@MOVED: MAYBE_SHARED used 34 times in main
+//# define MAYBE_SHARED(x) (REFCNT(x) > 1)
+//@MOVED: NO_REFERENCES used 16 times in main
+//# define NO_REFERENCES(x) (REFCNT(x) == 0)
+//@MOVED: MARK_NOT_MUTABLE used 15 times in main
+//# define MARK_NOT_MUTABLE(x) SET_REFCNT(x, REFCNTMAX)
+//#else
+//@MOVED: MAYBE_SHARED used 34 times in main
+//# define MAYBE_SHARED(x) (NAMED(x) > 1)
+//@MOVED: NO_REFERENCES used 16 times in main
+//# define NO_REFERENCES(x) (NAMED(x) == 0)
+//@MOVED: MARK_NOT_MUTABLE used 15 times in main
+//# define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
+//#endif
+//@MOVED: MAYBE_REFERENCED used 32 times in main
+//#define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
+//@MOVED: NOT_SHARED used 1 times in main
+//#define NOT_SHARED(x) (! MAYBE_SHARED(x))
 
 /* Complex assignment support */
-/* temporary definition that will need to be refined to distinguish
-   getter from setter calls */
-#define IS_GETTER_CALL(call) (CADR(call) == R_TmpvalSymbol)
+//@MOVED: IS_GETTER_CALL used 1 times in main
+///* temporary definition that will need to be refined to distinguish
+//   getter from setter calls */
+//#define IS_GETTER_CALL(call) (CADR(call) == R_TmpvalSymbol)
 
 /* Accessor functions.  Many are declared using () to avoid the macro
    definitions in the USE_RINTERNALS section.
@@ -538,7 +552,8 @@ int  (OBJECT)(SEXP x);
 int  (MARK)(SEXP x);
 int  (TYPEOF)(SEXP x);
 int  (NAMED)(SEXP x);
-int  (REFCNT)(SEXP x);
+//@MOVED: REFCNT used 9 times in main
+//int  (REFCNT)(SEXP x);
 void (SET_OBJECT)(SEXP x, int v);
 void (SET_TYPEOF)(SEXP x, int v);
 void (SET_NAMED)(SEXP x, int v);
@@ -551,12 +566,13 @@ int (IS_S4_OBJECT)(SEXP x);
 void (SET_S4_OBJECT)(SEXP x);
 void (UNSET_S4_OBJECT)(SEXP x);
 
+//@MOVED:
 /* JIT optimization support */
-int (NOJIT)(SEXP x);
-int (MAYBEJIT)(SEXP x);
-void (SET_NOJIT)(SEXP x);
-void (SET_MAYBEJIT)(SEXP x);
-void (UNSET_MAYBEJIT)(SEXP x);
+//int (NOJIT)(SEXP x);
+//int (MAYBEJIT)(SEXP x);
+//void (SET_NOJIT)(SEXP x);
+//void (SET_MAYBEJIT)(SEXP x);
+//void (UNSET_MAYBEJIT)(SEXP x);
 
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
@@ -564,7 +580,8 @@ int  (TRUELENGTH)(SEXP x);
 void (SETLENGTH)(SEXP x, int v);
 void (SET_TRUELENGTH)(SEXP x, int v);
 R_xlen_t  (XLENGTH)(SEXP x);
-R_xlen_t  (XTRUELENGTH)(SEXP x);
+//@MOVED: XTRUELENGTH used 5 times in main
+//R_xlen_t  (XTRUELENGTH)(SEXP x);
 int  (IS_LONG_VEC)(SEXP x);
 int  (LEVELS)(SEXP x);
 int  (SETLEVELS)(SEXP x, int v);
@@ -609,39 +626,52 @@ SEXP SETCADR(SEXP x, SEXP y);
 SEXP SETCADDR(SEXP x, SEXP y);
 SEXP SETCADDDR(SEXP x, SEXP y);
 SEXP SETCAD4R(SEXP e, SEXP y);
-
-SEXP CONS_NR(SEXP a, SEXP b);
+//@MOVED: CONS_NR used 42 times in main
+//SEXP CONS_NR(SEXP a, SEXP b);
 
 /* Closure Access Functions */
 SEXP (FORMALS)(SEXP x);
 SEXP (BODY)(SEXP x);
 SEXP (CLOENV)(SEXP x);
 int  (RDEBUG)(SEXP x);
-int  (RSTEP)(SEXP x);
-int  (RTRACE)(SEXP x);
-void (SET_RDEBUG)(SEXP x, int v);
-void (SET_RSTEP)(SEXP x, int v);
-void (SET_RTRACE)(SEXP x, int v);
+//@MOVED: RSTEP used 8 times in main
+//int  (RSTEP)(SEXP x);
+//@MOVED: RTRACE used 2 times in stats
+//int  (RTRACE)(SEXP x);
+//@MOVED: SET_RDEBUG used 18 times in main
+//void (SET_RDEBUG)(SEXP x, int v);
+//@MOVED: SET_RSTEP used 6 times in main
+//void (SET_RSTEP)(SEXP x, int v);
+//@MOVED: SET_RTRACE used 2 times in stats
+//void (SET_RTRACE)(SEXP x, int v);
 void SET_FORMALS(SEXP x, SEXP v);
 void SET_BODY(SEXP x, SEXP v);
 void SET_CLOENV(SEXP x, SEXP v);
 
 /* Symbol Access Functions */
 SEXP (PRINTNAME)(SEXP x);
-SEXP (SYMVALUE)(SEXP x);
+//@MOVED: SYMVALUE used 1 times in methods
+//SEXP (SYMVALUE)(SEXP x);
 SEXP (INTERNAL)(SEXP x);
-int  (DDVAL)(SEXP x);
-void (SET_DDVAL)(SEXP x, int v);
-void SET_PRINTNAME(SEXP x, SEXP v);
-void SET_SYMVALUE(SEXP x, SEXP v);
-void SET_INTERNAL(SEXP x, SEXP v);
+//@MOVED: DDVAL used 1 times in methods
+//int  (DDVAL)(SEXP x);
+//@MOVED: SET_DDVAL used 3 times in main
+//void (SET_DDVAL)(SEXP x, int v);
+//@MOVED: SET_PRINTNAME used 3 times in main
+//void SET_PRINTNAME(SEXP x, SEXP v);
+//@MOVED: SET_SYMVALUE used 14 times in main
+//void SET_SYMVALUE(SEXP x, SEXP v);
+//@MOVED: SET_INTERNAL used 2 times in main
+//void SET_INTERNAL(SEXP x, SEXP v);
 
 /* Environment Access Functions */
 SEXP (FRAME)(SEXP x);
 SEXP (ENCLOS)(SEXP x);
 SEXP (HASHTAB)(SEXP x);
-int  (ENVFLAGS)(SEXP x);
-void (SET_ENVFLAGS)(SEXP x, int v);
+//@MOVED: ENVFLAGS used 11 times in main
+//int  (ENVFLAGS)(SEXP x);
+//@MOVED: SET_ENVFLAGS used 6 times in main
+//void (SET_ENVFLAGS)(SEXP x, int v);
 void SET_FRAME(SEXP x, SEXP v);
 void SET_ENCLOS(SEXP x, SEXP v);
 void SET_HASHTAB(SEXP x, SEXP v);
@@ -652,18 +682,23 @@ SEXP (PRCODE)(SEXP x);
 SEXP (PRENV)(SEXP x);
 SEXP (PRVALUE)(SEXP x);
 int  (PRSEEN)(SEXP x);
-void (SET_PRSEEN)(SEXP x, int v);
-void SET_PRENV(SEXP x, SEXP v);
+//@MOVED: SET_PRSEEN used 8 times in main
+//void (SET_PRSEEN)(SEXP x, int v);
+//@MOVED: SET_PRENV used 4 times in main
+//void SET_PRENV(SEXP x, SEXP v);
 void SET_PRVALUE(SEXP x, SEXP v);
-void SET_PRCODE(SEXP x, SEXP v);
-void SET_PRSEEN(SEXP x, int v);
+//@MOVED: SET_PRCODE used 3 times in main
+//void SET_PRCODE(SEXP x, SEXP v);
+//@MOVED: SET_PRSEEN used 8 times in main
+//void SET_PRSEEN(SEXP x, int v);
 
+//@MOVED:
 /* Hashing Functions */
 /* There are macro versions in Defn.h */
-int  (HASHASH)(SEXP x);
-int  (HASHVALUE)(SEXP x);
-void (SET_HASHASH)(SEXP x, int v);
-void (SET_HASHVALUE)(SEXP x, int v);
+//int  (HASHASH)(SEXP x);
+//int  (HASHVALUE)(SEXP x);
+//void (SET_HASHASH)(SEXP x, int v);
+//void (SET_HASHVALUE)(SEXP x, int v);
 
 
 /* External pointer access macros */
@@ -672,10 +707,14 @@ void (SET_HASHVALUE)(SEXP x, int v);
 #define EXTPTR_TAG(x)	TAG(x)
 
 /* Bytecode access macros */
-#define BCODE_CODE(x)	CAR(x)
-#define BCODE_CONSTS(x) CDR(x)
-#define BCODE_EXPR(x)	TAG(x)
-#define isByteCode(x)	(TYPEOF(x)==BCODESXP)
+//@MOVED: BCODE_CODE used 6 times in main
+//#define BCODE_CODE(x)	CAR(x)
+//@MOVED: BCODE_CONSTS used 6 times in main
+//#define BCODE_CONSTS(x) CDR(x)
+//@MOVED: BCODE_EXPR used 3 times in main
+//#define BCODE_EXPR(x)	TAG(x)
+//@MOVED: isByteCode used 8 times in main
+//#define isByteCode(x)	(TYPEOF(x)==BCODESXP)
 
 /* Pointer Protection and Unprotection */
 #define PROTECT(s)	Rf_protect(s)
@@ -759,9 +798,10 @@ LibExtern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */
 LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 LibExtern SEXP	R_BlankScalarString;	    /* "" as a STRSXP */
 
+//@MOVED
 /* srcref related functions */
-SEXP R_GetCurrentSrcref(int);
-SEXP R_GetSrcFilename(SEXP);
+//SEXP R_GetCurrentSrcref(int);
+//SEXP R_GetSrcFilename(SEXP);
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
@@ -786,47 +826,63 @@ typedef struct R_allocator R_allocator_t;
 /* Other Internally Used Functions, excluding those which are inline-able*/
 
 char * Rf_acopy_string(const char *);
-void Rf_addMissingVarsToNewEnv(SEXP, SEXP);
+//@MOVED: Rf_addMissingVarsToNewEnv unused
+//void Rf_addMissingVarsToNewEnv(SEXP, SEXP);
 SEXP Rf_alloc3DArray(SEXPTYPE, int, int, int);
 SEXP Rf_allocArray(SEXPTYPE, SEXP);
-SEXP Rf_allocFormalsList2(SEXP sym1, SEXP sym2);
-SEXP Rf_allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3);
-SEXP Rf_allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4);
-SEXP Rf_allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5);
-SEXP Rf_allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6);
+//@MOVED: Rf_allocFormalsList2 unused
+//SEXP Rf_allocFormalsList2(SEXP sym1, SEXP sym2);
+//@MOVED: Rf_allocFormalsList3 unused
+//SEXP Rf_allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3);
+//@MOVED: Rf_allocFormalsList4 unused
+//SEXP Rf_allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4);
+//@MOVED: Rf_allocFormalsList5 unused
+//SEXP Rf_allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5);
+//@MOVED: Rf_allocFormalsList6 unused
+//SEXP Rf_allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6);
 SEXP Rf_allocMatrix(SEXPTYPE, int, int);
 SEXP Rf_allocList(int);
 SEXP Rf_allocS4Object(void);
 SEXP Rf_allocSExp(SEXPTYPE);
-SEXP Rf_allocVector3(SEXPTYPE, R_xlen_t, R_allocator_t*);
+//@MOVED: Rf_allocVector3 unused
+//SEXP Rf_allocVector3(SEXPTYPE, R_xlen_t, R_allocator_t*);
 R_xlen_t Rf_any_duplicated(SEXP x, Rboolean from_last);
-R_xlen_t Rf_any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last);
-SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
+//@MOVED: Rf_any_duplicated3 unused
+//R_xlen_t Rf_any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last);
+//@MOVED: Rf_applyClosure unused
+//SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
-SEXP Rf_fixSubset3Args(SEXP, SEXP, SEXP, SEXP*);
+//@MOVED: Rf_fixSubset3Args unused
+//SEXP Rf_fixSubset3Args(SEXP, SEXP, SEXP, SEXP*);
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyListMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMostAttrib(SEXP, SEXP);
 void Rf_copyVector(SEXP, SEXP);
-int Rf_countContexts(int, int);
+//@MOVED: Rf_countContexts unused
+//int Rf_countContexts(int, int);
 SEXP Rf_CreateTag(SEXP);
 void Rf_defineVar(SEXP, SEXP, SEXP);
 SEXP Rf_dimgets(SEXP, SEXP);
 SEXP Rf_dimnamesgets(SEXP, SEXP);
-SEXP Rf_DropDims(SEXP);
+//@MOVED: DropDims used 5 times in main
+//SEXP Rf_DropDims(SEXP);
 SEXP Rf_duplicate(SEXP);
 SEXP Rf_shallow_duplicate(SEXP);
-SEXP Rf_lazy_duplicate(SEXP);
+//@MOVED: Rf_lazy_duplicate unused
+//SEXP Rf_lazy_duplicate(SEXP);
 /* the next really should not be here and is also in Defn.h */
 SEXP Rf_duplicated(SEXP, Rboolean);
-Rboolean R_envHasNoSpecialSymbols(SEXP);
+//@MOVED: R_envHasNoSpecialSymbols
+//Rboolean R_envHasNoSpecialSymbols(SEXP);
 SEXP Rf_eval(SEXP, SEXP);
 SEXP Rf_findFun(SEXP, SEXP);
-SEXP Rf_findFun3(SEXP, SEXP, SEXP);
-void Rf_findFunctionForBody(SEXP);
+//@MOVED: Rf_findFun3 unused
+//SEXP Rf_findFun3(SEXP, SEXP, SEXP);
+//@MOVED: Rf_findFunctionForBody unused
+//void Rf_findFunctionForBody(SEXP);
 SEXP Rf_findVar(SEXP, SEXP);
 SEXP Rf_findVarInFrame(SEXP, SEXP);
 SEXP Rf_findVarInFrame3(SEXP, SEXP, Rboolean);
@@ -842,19 +898,27 @@ SEXP Rf_GetRowNames(SEXP);
 void Rf_gsetVar(SEXP, SEXP, SEXP);
 SEXP Rf_install(const char *);
 SEXP Rf_installChar(SEXP);
-SEXP Rf_installDDVAL(int i);
-SEXP Rf_installS3Signature(const char *, const char *);
-Rboolean Rf_isFree(SEXP);
+//@MOVED: Rf_installDDVAL unused
+//SEXP Rf_installDDVAL(int i);
+//@MOVED: Rf_installS3Signature unused
+//SEXP Rf_installS3Signature(const char *, const char *);
+//@MOVED: Rf_isFree unused
+//Rboolean Rf_isFree(SEXP);
 Rboolean Rf_isOrdered(SEXP);
-Rboolean Rf_isUnmodifiedSpecSym(SEXP sym, SEXP env);
+//@MOVED: Rf_isUnmodifiedSpecSym unused
+//Rboolean Rf_isUnmodifiedSpecSym(SEXP sym, SEXP env);
 Rboolean Rf_isUnordered(SEXP);
-Rboolean Rf_isUnsorted(SEXP, Rboolean);
+//@MOVED: Rf_isUnsorted unused
+//Rboolean Rf_isUnsorted(SEXP, Rboolean);
 SEXP Rf_lengthgets(SEXP, R_len_t);
-SEXP Rf_xlengthgets(SEXP, R_xlen_t);
+//@MOVED:
+//SEXP Rf_xlengthgets(SEXP, R_xlen_t);
 SEXP R_lsInternal(SEXP, Rboolean);
-SEXP R_lsInternal3(SEXP, Rboolean, Rboolean);
+//@MOVED: R_lsInternal3 used 4 times in main
+//SEXP R_lsInternal3(SEXP, Rboolean, Rboolean);
 SEXP Rf_match(SEXP, SEXP, int);
-SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
+//@MOVED:
+//SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
 SEXP Rf_namesgets(SEXP, SEXP);
 SEXP Rf_mkChar(const char *);
 SEXP Rf_mkCharLen(const char *, int);
@@ -865,29 +929,36 @@ SEXP Rf_nthcdr(SEXP, int);
 
 // ../main/character.c :
 typedef enum {Bytes, Chars, Width} nchar_type;
-int R_nchar(SEXP string, nchar_type type_,
-	    Rboolean allowNA, Rboolean keepNA, const char* msg_name);
+//@MOVED: R_nchar used 5 times in main
+//int R_nchar(SEXP string, nchar_type type_,
+//	    Rboolean allowNA, Rboolean keepNA, const char* msg_name);
 
 Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
 Rboolean Rf_psmatch(const char *, const char *, Rboolean);
-SEXP R_ParseEvalString(const char *, SEXP);
+//@MOVED: R_ParseEvalString used 2 times in main
+//SEXP R_ParseEvalString(const char *, SEXP);
 void Rf_PrintValue(SEXP);
 #ifndef INLINE_PROTECT
 SEXP Rf_protect(SEXP);
 #endif
-void Rf_readS3VarsFromFrame(SEXP, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*);
+//@MOVED: Rf_readS3VarsFromFrame unused
+//void Rf_readS3VarsFromFrame(SEXP, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
-void Rf_setSVector(SEXP*, int, SEXP);
+//@MOVED: Rf_setSVector unused
+//void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
-SEXP Rf_stringSuffix(SEXP, int);
+//@MOVED: Rf_setSVector unused
+//SEXP Rf_stringSuffix(SEXP, int);
 SEXPTYPE Rf_str2type(const char *);
 Rboolean Rf_StringBlank(SEXP);
 SEXP Rf_substitute(SEXP,SEXP);
 const char * Rf_translateChar(SEXP);
-const char * Rf_translateChar0(SEXP);
+//@MOVED: Rf_translateChar0 unused
+//const char * Rf_translateChar0(SEXP);
 const char * Rf_translateCharUTF8(SEXP);
 const char * Rf_type2char(SEXPTYPE);
-SEXP Rf_type2rstr(SEXPTYPE);
+//@MOVED: Rf_type2str_nowarn unused
+//SEXP Rf_type2rstr(SEXPTYPE);
 SEXP Rf_type2str(SEXPTYPE);
 SEXP Rf_type2str_nowarn(SEXPTYPE);
 #ifndef INLINE_PROTECT
@@ -904,13 +975,14 @@ void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 #endif
 SEXP R_tryEval(SEXP, SEXP, int *);
-SEXP R_tryEvalSilent(SEXP, SEXP, int *);
+//@MOVED: R_tryEvalSilent used 6 times in methods
+//SEXP R_tryEvalSilent(SEXP, SEXP, int *);
 const char *R_curErrorBuf();
 
 Rboolean Rf_isS4(SEXP);
 SEXP Rf_asS4(SEXP, Rboolean, int);
 SEXP Rf_S3Class(SEXP);
-int Rf_isBasicClass(const char *);
+//int Rf_isBasicClass(const char *);
 
 Rboolean R_cycle_detected(SEXP s, SEXP child);
 
@@ -937,8 +1009,9 @@ const char *Rf_reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
 #undef LibExtern
 #endif
 
+//@MOVED: R_forceAndCall used 7 times in main
 /* Calling a function with arguments evaluated */
-SEXP R_forceAndCall(SEXP e, int n, SEXP rho);
+//SEXP R_forceAndCall(SEXP e, int n, SEXP rho);
 
 /* External pointer interface */
 SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot);
@@ -957,28 +1030,40 @@ DL_FUNC R_ExternalPtrAddrFn(SEXP s);
 typedef void (*R_CFinalizer_t)(SEXP);
 void R_RegisterFinalizer(SEXP s, SEXP fun);
 void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
-void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit);
+//@MOVED: R_RegisterFinalizerEx used 3 times in main
+//void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit);
 void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit);
-void R_RunPendingFinalizers(void);
+//@MOVED: R_RunPendingFinalizers used 4 times in main
+//void R_RunPendingFinalizers(void);
 
 /* Weak reference interface */
 SEXP R_MakeWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit);
-SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin, Rboolean onexit);
+//@MOVED: R_MakeWeakRefC used 2 times in main
+//SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin, Rboolean onexit);
 SEXP R_WeakRefKey(SEXP w);
 SEXP R_WeakRefValue(SEXP w);
 void R_RunWeakRefFinalizer(SEXP w);
 
 SEXP R_PromiseExpr(SEXP);
-SEXP R_ClosureExpr(SEXP);
-SEXP R_BytecodeExpr(SEXP e);
-void R_initialize_bcode(void);
-SEXP R_bcEncode(SEXP);
-SEXP R_bcDecode(SEXP);
-void R_registerBC(SEXP, SEXP);
-Rboolean R_checkConstants(Rboolean);
-Rboolean R_BCVersionOK(SEXP);
+//@MOVED: R_ClosureExpr used 4 times in main
+//SEXP R_ClosureExpr(SEXP);
+//@MOVED: R_BytecodeExpr used 2 times in main
+//SEXP R_BytecodeExpr(SEXP e);
+//@MOVED: R_initialize_bcode used 2 times in main
+//void R_initialize_bcode(void);
+//@MOVED: R_bcEncode used 4 times in main
+//SEXP R_bcEncode(SEXP);
+//@MOVED: R_bcDecode used 4 times in main
+//SEXP R_bcDecode(SEXP);
+//@MOVED: R_registerBC used 3 times in main
+//void R_registerBC(SEXP, SEXP);
+//@MOVED: R_checkConstants used 7 times in main
+//Rboolean R_checkConstants(Rboolean);
+//@MOVED: R_BCVersionOK used 3 times in main
+//Rboolean R_BCVersionOK(SEXP);
 #define PREXPR(e) R_PromiseExpr(e)
-#define BODY_EXPR(e) R_ClosureExpr(e)
+//@MOVED: BODY_EXPR used 5 times in main
+//#define BODY_EXPR(e) R_ClosureExpr(e)
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
@@ -992,21 +1077,29 @@ SEXP R_tryCatchError(SEXP (*)(void *), void *,        /* body closure*/
 		     SEXP (*)(SEXP, void *), void *); /* handler closure */
 
 /* Environment and Binding Features */
-void R_RestoreHashCount(SEXP rho);
-Rboolean R_IsPackageEnv(SEXP rho);
-SEXP R_PackageEnvName(SEXP rho);
-SEXP R_FindPackageEnv(SEXP info);
-Rboolean R_IsNamespaceEnv(SEXP rho);
-SEXP R_NamespaceEnvSpec(SEXP rho);
+//@MOVED: R_RestoreHashCount used 3 times in main
+//void R_RestoreHashCount(SEXP rho);
+//@MOVED: R_IsPackageEnv used 7 times in main
+//Rboolean R_IsPackageEnv(SEXP rho);
+//@MOVED: R_PackageEnvName used 5 times in main
+//SEXP R_PackageEnvName(SEXP rho);
+//@MOVED: R_FindPackageEnv used 2 times in main
+//SEXP R_FindPackageEnv(SEXP info);
+//@MOVED: R_IsNamespaceEnv used 16 times in main
+//Rboolean R_IsNamespaceEnv(SEXP rho);
+//@MOVED: R_NamespaceEnvSpec used 9 times in main
+//SEXP R_NamespaceEnvSpec(SEXP rho);
 SEXP R_FindNamespace(SEXP info);
 void R_LockEnvironment(SEXP env, Rboolean bindings);
 Rboolean R_EnvironmentIsLocked(SEXP env);
 void R_LockBinding(SEXP sym, SEXP env);
 void R_unLockBinding(SEXP sym, SEXP env);
-void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env);
+//@MOVED: R_MakeActiveBinding used 3 times in main
+//void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env);
 Rboolean R_BindingIsLocked(SEXP sym, SEXP env);
 Rboolean R_BindingIsActive(SEXP sym, SEXP env);
-Rboolean R_HasFancyBindings(SEXP rho);
+//@MOVED: R_HasFancyBindings used 2 times in main
+//Rboolean R_HasFancyBindings(SEXP rho);
 
 
 /* ../main/errors.c : */
@@ -1023,10 +1116,14 @@ void Rf_warningcall_immediate(SEXP, const char *, ...);
 #define R_XDR_DOUBLE_SIZE 8
 #define R_XDR_INTEGER_SIZE 4
 
-void R_XDREncodeDouble(double d, void *buf);
-double R_XDRDecodeDouble(void *buf);
-void R_XDREncodeInteger(int i, void *buf);
-int R_XDRDecodeInteger(void *buf);
+//@MOVED: R_XDREncodeDouble used 2 times in main
+//void R_XDREncodeDouble(double d, void *buf);
+//@MOVED: R_XDRDecodeDouble used 2 times in main
+//double R_XDRDecodeDouble(void *buf);
+//@MOVED: R_XDREncodeInteger used 2 times in main
+//void R_XDREncodeInteger(int i, void *buf);
+//@MOVED: R_XDRDecodeInteger used 2 times in main
+//int R_XDRDecodeInteger(void *buf);
 
 typedef void *R_pstream_data_t;
 
@@ -1109,16 +1206,21 @@ SEXP R_Unserialize(R_inpstream_t ips);
 SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 int R_has_slot(SEXP obj, SEXP name);
+//@MOVED: R_S4_extends used 1 times in main
 /* S3-S4 class (inheritance), attrib.c */
-SEXP R_S4_extends(SEXP klass, SEXP useTable);
+//SEXP R_S4_extends(SEXP klass, SEXP useTable);
 
 /* class definition, new objects (objects.c) */
 SEXP R_do_MAKE_CLASS(const char *what);
 SEXP R_getClassDef  (const char *what);
-SEXP R_getClassDef_R(SEXP what);
-Rboolean R_has_methods_attached(void);
-Rboolean R_isVirtualClass(SEXP class_def, SEXP env);
-Rboolean R_extends  (SEXP class1, SEXP class2, SEXP env);
+//@MOVED: R_getClassDef_R used 3 times in main
+//SEXP R_getClassDef_R(SEXP what);
+//@MOVED: R_has_methods_attached used 2 times in main
+//Rboolean R_has_methods_attached(void);
+//@MOVED: R_isVirtualClass used 2 times in main
+//Rboolean R_isVirtualClass(SEXP class_def, SEXP env);
+//@MOVED: R_extends used 3 times in main
+//Rboolean R_extends  (SEXP class1, SEXP class2, SEXP env);
 SEXP R_do_new_object(SEXP class_def);
 /* supporting  a C-level version of  is(., .) : */
 int R_check_class_and_super(SEXP x, const char **valid, SEXP rho);
@@ -1154,7 +1256,8 @@ int R_system(const char *);
 */
 Rboolean R_compute_identical(SEXP, SEXP, int);
 
-SEXP R_body_no_src(SEXP x); // body(x) without "srcref" etc, ../main/utils.c
+//@MOVED: R_body_no_src used 4 times in main
+//SEXP R_body_no_src(SEXP x); // body(x) without "srcref" etc, ../main/utils.c
 
 /* C version of R's  indx <- order(..., na.last, decreasing) :
    e.g.  arglist = Rf_lang2(x,y)  or  Rf_lang3(x,y,z) */
@@ -1164,23 +1267,32 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 
 #ifndef R_NO_REMAP
 #define acopy_string		Rf_acopy_string
-#define addMissingVarsToNewEnv	Rf_addMissingVarsToNewEnv
+//@MOVED: addMissingVarsToNewEnv used 3 times in main
+//#define addMissingVarsToNewEnv	Rf_addMissingVarsToNewEnv
 #define alloc3DArray            Rf_alloc3DArray
 #define allocArray		Rf_allocArray
-#define allocFormalsList2	Rf_allocFormalsList2
-#define allocFormalsList3	Rf_allocFormalsList3
-#define allocFormalsList4	Rf_allocFormalsList4
-#define allocFormalsList5	Rf_allocFormalsList5
-#define allocFormalsList6	Rf_allocFormalsList6
+//@MOVED: allocFormalsList2 used 8 times in main
+//#define allocFormalsList2	Rf_allocFormalsList2
+//@MOVED: allocFormalsList3 used 3 times in main
+//#define allocFormalsList3	Rf_allocFormalsList3
+//@MOVED: allocFormalsList4 used 1 times in main
+//#define allocFormalsList4	Rf_allocFormalsList4
+//@MOVED: allocFormalsList5 used 2 times in main
+//#define allocFormalsList5	Rf_allocFormalsList5
+//@MOVED: allocFormalsList6 used 2 times in main
+//#define allocFormalsList6	Rf_allocFormalsList6
 #define allocList		Rf_allocList
 #define allocMatrix		Rf_allocMatrix
 #define allocS4Object		Rf_allocS4Object
 #define allocSExp		Rf_allocSExp
 #define allocVector		Rf_allocVector
-#define allocVector3		Rf_allocVector3
+//@MOVED: allocVector3 used 1 times in main
+//#define allocVector3		Rf_allocVector3
 #define any_duplicated		Rf_any_duplicated
-#define any_duplicated3		Rf_any_duplicated3
-#define applyClosure		Rf_applyClosure
+//@MOVED: any_duplicated3 used 3 times in main
+//#define any_duplicated3		Rf_any_duplicated3
+//@MOVED: applyClosure used 24 times in main
+//#define applyClosure		Rf_applyClosure
 #define arraySubscript		Rf_arraySubscript
 #define asChar			Rf_asChar
 #define asCharacterFactor	Rf_asCharacterFactor
@@ -1188,17 +1300,20 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define asInteger		Rf_asInteger
 #define asLogical		Rf_asLogical
 #define asReal			Rf_asReal
-#define asS4			Rf_asS4
+//@MOVED: asS4 used 3 times in main
+//#define asS4			Rf_asS4
 #define classgets		Rf_classgets
 #define coerceVector		Rf_coerceVector
 #define conformable		Rf_conformable
 #define cons			Rf_cons
-#define fixSubset3Args		Rf_fixSubset3Args
+//@MOVED: fixSubset3Args used 3 times in main
+//#define fixSubset3Args		Rf_fixSubset3Args
 #define copyListMatrix		Rf_copyListMatrix
 #define copyMatrix		Rf_copyMatrix
 #define copyMostAttrib		Rf_copyMostAttrib
 #define copyVector		Rf_copyVector
-#define countContexts		Rf_countContexts
+//@MOVED: countContexts used 3 times in main
+//#define countContexts		Rf_countContexts
 #define CreateTag		Rf_CreateTag
 #define defineVar		Rf_defineVar
 #define dimgets			Rf_dimgets
@@ -1210,8 +1325,10 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define errorcall		Rf_errorcall
 #define eval			Rf_eval
 #define findFun			Rf_findFun
-#define findFun3		Rf_findFun3
-#define findFunctionForBody	Rf_findFunctionForBody
+//@MOVED: findFun3 used 3 times in main
+//#define findFun3		Rf_findFun3
+//@MOVED: findFunctionForBody used 3 times in main
+//#define findFunctionForBody	Rf_findFunctionForBody
 #define findVar			Rf_findVar
 #define findVarInFrame		Rf_findVarInFrame
 #define findVarInFrame3		Rf_findVarInFrame3
@@ -1229,16 +1346,20 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define inherits		Rf_inherits
 #define install			Rf_install
 #define installChar		Rf_installChar
-#define installDDVAL		Rf_installDDVAL
-#define installS3Signature	Rf_installS3Signature
+//@MOVED: installDDVAL used 2 times in main
+//#define installDDVAL		Rf_installDDVAL
+//@MOVED: installS3Signature used 8 times in main
+//#define installS3Signature	Rf_installS3Signature
 #define isArray			Rf_isArray
-#define isBasicClass            Rf_isBasicClass
+//@MOVED: isBasicClass used 2 times in main
+//#define isBasicClass            Rf_isBasicClass
 #define isComplex		Rf_isComplex
 #define isEnvironment		Rf_isEnvironment
 #define isExpression		Rf_isExpression
 #define isFactor		Rf_isFactor
 #define isFrame			Rf_isFrame
-#define isFree			Rf_isFree
+//@MOVED: isFree used 1 times in main
+//#define isFree			Rf_isFree
 #define isFunction		Rf_isFunction
 #define isInteger		Rf_isInteger
 #define isLanguage		Rf_isLanguage
@@ -1258,9 +1379,11 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define isS4			Rf_isS4
 #define isString		Rf_isString
 #define isTs			Rf_isTs
-#define isUnmodifiedSpecSym	Rf_isUnmodifiedSpecSym
+//@MOVED: isUnmodifiedSpecSym used 4 times in main
+//#define isUnmodifiedSpecSym	Rf_isUnmodifiedSpecSym
 #define isUnordered		Rf_isUnordered
-#define isUnsorted		Rf_isUnsorted
+//@MOVED: isUnsorted used 5 times in main
+//#define isUnsorted		Rf_isUnsorted
 #define isUserBinop		Rf_isUserBinop
 #define isValidString		Rf_isValidString
 #define isValidStringF		Rf_isValidStringF
@@ -1274,8 +1397,10 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define lang4			Rf_lang4
 #define lang5			Rf_lang5
 #define lang6			Rf_lang6
-#define lastElt			Rf_lastElt
-#define lazy_duplicate		Rf_lazy_duplicate
+//@MOVED: lastElt used 2 times in main
+//#define lastElt			Rf_lastElt
+//@MOVED: lazy_duplicate used 28 times in main
+//#define lazy_duplicate		Rf_lazy_duplicate
 #define lcons			Rf_lcons
 #define length(x)		Rf_length(x)
 #define lengthgets		Rf_lengthgets
@@ -1287,7 +1412,8 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define list6			Rf_list6
 #define listAppend		Rf_listAppend
 #define match			Rf_match
-#define matchE			Rf_matchE
+//@MOVED: matchE used 1 times in utils
+//#define matchE			Rf_matchE
 #define mkChar			Rf_mkChar
 #define mkCharCE		Rf_mkCharCE
 #define mkCharLen		Rf_mkCharLen
@@ -1305,9 +1431,11 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define psmatch			Rf_psmatch
 #define PrintValue		Rf_PrintValue
 #define protect			Rf_protect
-#define readS3VarsFromFrame	Rf_readS3VarsFromFrame
+//@MOVED: readS3VarsFromFrame used 3 times in main
+//#define readS3VarsFromFrame	Rf_readS3VarsFromFrame
 #define reEnc			Rf_reEnc
-#define rownamesgets		Rf_rownamesgets
+//@MOVED: rownamesgets unused
+//#define rownamesgets		Rf_rownamesgets
 #define S3Class                 Rf_S3Class
 #define ScalarComplex		Rf_ScalarComplex
 #define ScalarInteger		Rf_ScalarInteger
@@ -1316,20 +1444,27 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define ScalarString		Rf_ScalarString
 #define ScalarRaw		Rf_ScalarRaw
 #define setAttrib		Rf_setAttrib
-#define setSVector		Rf_setSVector
+//@MOVED: setSVector used 1 times in main
+//#define setSVector		Rf_setSVector
 #define setVar			Rf_setVar
 #define shallow_duplicate	Rf_shallow_duplicate
 #define str2type		Rf_str2type
-#define stringSuffix		Rf_stringSuffix
-#define stringPositionTr	Rf_stringPositionTr
-#define StringBlank		Rf_StringBlank
+//@MOVED: stringSuffix used 4 times in main
+//#define stringSuffix		Rf_stringSuffix
+//@MOVED: stringPositionTr used 2 times in main
+//#define stringPositionTr	Rf_stringPositionTr
+//@MOVED: StringBlank used 2 times in main
+//#define StringBlank		Rf_StringBlank
 #define substitute		Rf_substitute
-#define topenv		        Rf_topenv
+//@MOVED: topenv used 12 times in main
+//#define topenv		        Rf_topenv
 #define translateChar		Rf_translateChar
-#define translateChar0		Rf_translateChar0
+//@MOVED: translateChar0 used 12 times in main
+//#define translateChar0		Rf_translateChar0
 #define translateCharUTF8      	Rf_translateCharUTF8
 #define type2char		Rf_type2char
-#define type2rstr		Rf_type2rstr
+//@MOVED: type2rstr used 2 times in main
+//#define type2rstr		Rf_type2rstr
 #define type2str		Rf_type2str
 #define type2str_nowarn		Rf_type2str_nowarn
 #define unprotect		Rf_unprotect
@@ -1338,12 +1473,14 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define warningcall		Rf_warningcall
 #define warningcall_immediate	Rf_warningcall_immediate
 #define xlength(x)		Rf_xlength(x)
-#define xlengthgets		Rf_xlengthgets
+//@MOVED: xlengthgets used 1 times in tools
+//#define xlengthgets		Rf_xlengthgets
 
 #endif
 
 #if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))
-#include "Rinlinedfuns.h"
+//@MOVED: to private/Rinternals.h
+//#include "Rinlinedfuns.h"
 #else
 /* need remapped names here for use with R_NO_REMAP */
 
@@ -1356,6 +1493,7 @@ SEXP     Rf_allocVector(SEXPTYPE, R_xlen_t);
 Rboolean Rf_conformable(SEXP, SEXP);
 SEXP	 Rf_elt(SEXP, int);
 Rboolean Rf_inherits(SEXP, const char *);
+// The following functions seem too fundamental to be moved, although some of them are not used
 Rboolean Rf_isArray(SEXP);
 Rboolean Rf_isFactor(SEXP);
 Rboolean Rf_isFrame(SEXP);
@@ -1383,7 +1521,8 @@ SEXP	 Rf_lang3(SEXP, SEXP, SEXP);
 SEXP	 Rf_lang4(SEXP, SEXP, SEXP, SEXP);
 SEXP	 Rf_lang5(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP	 Rf_lang6(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP	 Rf_lastElt(SEXP);
+//@MOVED:  Rf_lastElt unused
+//SEXP	 Rf_lastElt(SEXP);
 SEXP	 Rf_lcons(SEXP, SEXP);
 R_len_t  Rf_length(SEXP);
 SEXP	 Rf_list1(SEXP);
@@ -1410,7 +1549,8 @@ void Rf_unprotect(int);
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
-SEXP R_FixupRHS(SEXP x, SEXP y);
+//@MOVED: R_FixupRHS used 8 times in main
+//SEXP R_FixupRHS(SEXP x, SEXP y);
 #endif
 
 #ifdef USE_RINTERNALS

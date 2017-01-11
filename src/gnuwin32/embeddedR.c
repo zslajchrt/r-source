@@ -18,7 +18,7 @@
 
 #include <config.h>
 #include <Defn.h>
-#include <Rembedded.h>
+#include <private/Rembedded.h>
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>

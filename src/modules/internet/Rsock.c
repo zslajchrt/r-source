@@ -150,7 +150,7 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 
 /* --------- for use in socket connections ---------- */
 
-#include <R_ext/R-ftp-http.h>
+#include <R_ext/private/R-ftp-http.h>
 
 #ifdef Win32
 #include <winsock2.h>

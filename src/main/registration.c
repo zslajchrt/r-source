@@ -47,7 +47,7 @@
 #include <Defn.h>
 #include <R_ext/Rdynload.h>
 #include <R_ext/Applic.h>
-#include <R_ext/Linpack.h>
+#include <R_ext/private/Linpack.h>
 
 
 /*  These get the declarations of some routines referenced here but

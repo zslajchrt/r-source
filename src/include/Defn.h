@@ -77,7 +77,7 @@ Rcomplex Rf_ComplexFromInteger(int, int*);
 Rcomplex Rf_ComplexFromReal(double, int*);
 
 #define CALLED_FROM_DEFN_H 1
-#include <Rinternals.h>		/*-> Arith.h, Boolean.h, Complex.h, Error.h,
+#include <private/Rinternals.h>		/*-> Arith.h, Boolean.h, Complex.h, Error.h,
 				  Memory.h, PrtUtil.h, Utils.h */
 #undef CALLED_FROM_DEFN_H
 extern0 SEXP	R_CommentSymbol;    /* "comment" */

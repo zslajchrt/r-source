@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2005  The R Core Team
+ *  Copyright (C) 2006-2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,20 +17,19 @@
  *  https://www.R-project.org/Licenses/
  */
 
-int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
+#ifndef R_PRIVATE_EMBEDDED_H_
+#define R_PRIVATE_EMBEDDED_H_
 
-#include <private/Rinterface.h>
+#include "../Rembedded.h"
 
-int main(int ac, char **av)
-{
-    R_running_as_main_program = 1;
-    Rf_initialize_R(ac, av);
-    Rf_mainloop(); /* does not return */
-    return 0;
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void R_setStartTime(void);
+
+#ifdef __cplusplus
 }
+#endif
 
-	/* Declarations to keep f77 happy */
-
-int MAIN_(int ac, char **av)  {return 0;}
-int MAIN__(int ac, char **av) {return 0;}
-int __main(int ac, char **av) {return 0;}
+#endif /* R_PRIVATE_EMBEDDED_H_ */

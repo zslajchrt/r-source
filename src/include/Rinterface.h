@@ -51,37 +51,50 @@ extern "C" {
 extern Rboolean R_Interactive;	/* TRUE during interactive use*/
 extern Rboolean	R_Slave;	/* Run as a slave process */
 
-extern void R_RestoreGlobalEnv(void);
-extern void R_RestoreGlobalEnvFromFile(const char *, Rboolean);
+//@MOVED: R_RestoreGlobalEnv used 2 times in main
+//extern void R_RestoreGlobalEnv(void);
+//@MOVED: R_RestoreGlobalEnvFromFile used 2 times in main
+//extern void R_RestoreGlobalEnvFromFile(const char *, Rboolean);
 extern void R_SaveGlobalEnv(void);
-extern void R_SaveGlobalEnvToFile(const char *);
+//@MOVED: R_SaveGlobalEnvToFile used 2 times in main
+//extern void R_SaveGlobalEnvToFile(const char *);
 extern void R_FlushConsole(void);
 extern void R_ClearerrConsole(void);
-extern void R_Suicide(const char *);
-extern char *R_HomeDir(void);
+//@MOVED: R_Suicide used 45 times in gnuwin32, main, unix
+//extern void R_Suicide(const char *);
+//@MOVED: R_HomeDir used 1 times in grDevices
+//extern char *R_HomeDir(void);
 extern int R_DirtyImage;	/* Current image dirty */
 extern char *R_GUIType;
-extern void R_setupHistory(void);
+//@MOVED: R_setupHistory used 2 times in utils
+//extern void R_setupHistory(void);
 extern char *R_HistoryFile;	/* Name of the history file */
 extern int R_HistorySize;	/* Size of the history file */
 extern int R_RestoreHistory;	/* restore the history file? */
 extern char *R_Home;		    /* Root of the R tree */
 
 # define jump_to_toplevel	Rf_jump_to_toplevel
-# define mainloop		Rf_mainloop
+//@MOVED: mainloop used 3 times in main, extra
+//# define mainloop		Rf_mainloop
 # define onintr			Rf_onintr
-# define onintrNoResume		Rf_onintrNoResume
+//@MOVED: onintrNoResume used 4 times in main, unix
+//# define onintrNoResume		Rf_onintrNoResume
 void NORET jump_to_toplevel(void);
-void mainloop(void);
+//@MOVED: Rf_mainloop used 5 times in gnuwin32, main
+//void mainloop(void);
 void onintr(void);
+//@MOVED: Rf_onintrNoResume unused
 void onintrNoResume(void);
 #ifndef DEFN_H_
 extern void* R_GlobalContext;    /* Need opaque pointer type for export */
 #endif
 
-void process_site_Renviron(void);
-void process_system_Renviron(void);
-void process_user_Renviron(void);
+//@MOVED: process_site_Renviron used 4 times in gnuwin32, main, unix
+//void process_site_Renviron(void);
+//@MOVED: process_system_Renviron used 2 times in main, unix
+//void process_system_Renviron(void);
+//@MOVED: process_user_Renviron used 4 times in gnuwin32, main, unix
+//void process_user_Renviron(void);
 
 #ifdef __cplusplus
 extern std::FILE * R_Consolefile;
@@ -92,11 +105,13 @@ extern FILE * R_Outputfile;
 #endif
 
 /* in ../unix/sys-unix.c */
-void R_setStartTime(void);
+//@MOVED: R_setStartTime used 9 times in gnuwin32, unix
+//void R_setStartTime(void);
 void fpu_setup(Rboolean);
 
 /* in ../unix/system.c */
-extern int R_running_as_main_program;
+//@MOVED: R_running_as_main_program used 3 times in main, unix
+//extern int R_running_as_main_program;
 
 #ifdef CSTACK_DEFNS
 /* duplicating Defn.h */

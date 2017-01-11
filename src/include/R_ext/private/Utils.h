@@ -1,12 +1,12 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2016  The R Core Team
+ *  Copyright (C) 1998-2016    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2.1 of the License, or
  *  (at your option) any later version.
- *
+
  *  This file is part of R. R is distributed under the terms of the
  *  GNU General Public License, either Version 2, June 1991 or Version 3,
  *  June 2007. See doc/COPYRIGHTS for details of the copyright status of R.
@@ -21,40 +21,38 @@
  *  https://www.R-project.org/Licenses/
  *
  *
- * Memory Allocation (garbage collected) --- INCLUDING S compatibility ---
+ * Generally useful  UTILITIES  *NOT* relying on R internals (from Defn.h)
  */
 
 /* Included by R.h: API */
 
-#ifndef R_EXT_MEMORY_H_
-#define R_EXT_MEMORY_H_
+#ifndef R_PRIVATE_EXT_UTILS_H_
+#define R_PRIVATE_EXT_UTILS_H_
 
-#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-# include <cstddef>
-# define R_SIZE_T std::size_t
-#else
-# include <stddef.h> /* for size_t */
-# define R_SIZE_T size_t
+#include <R_ext/Utils.h>
+
+#define IndexWidth    Rf_IndexWidth
+#define setIVector    Rf_setIVector
+
+/* ../../main/sort.c : */
+void	R_csort(Rcomplex*, int);
+
+#ifdef R_RS_H
+void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
+void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 #endif
 
-#ifdef  __cplusplus
-extern "C" {
-#endif
+/* ../../main/util.c  and others : */
+void	setIVector(int*, int, int);
 
-void*	vmaxget(void);
-void	vmaxset(const void *);
+char *R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext);
 
-void	R_gc(void);
-//@MOVED: R_gc_running used 2 times in main
-//int	R_gc_running();
+/* ../../appl/interv.c: also in Applic.h */
+int findInterval2(double *xt, int n, double x,
+		  Rboolean rightmost_closed,  Rboolean all_inside, Rboolean left_open,
+		  int ilo, int *mflag);
+void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
+		     int *rightmost_closed, int *all_inside, int *indx);
 
-char*	R_alloc(R_SIZE_T, int);
-long double *R_allocLD(R_SIZE_T nelem);
-char*	S_alloc(long, int);
-char*	S_realloc(char *, long, long, int);
 
-#ifdef  __cplusplus
-}
-#endif
-
-#endif /* R_EXT_MEMORY_H_ */
+#endif /* R_PRIVATE_EXT_UTILS_H_ */
